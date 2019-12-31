@@ -6,6 +6,7 @@ use Response\API\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+/** @codeCoverageIgnore */
 class RedirectIfAuthenticated
 {
     /**

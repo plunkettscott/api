@@ -1,0 +1,40 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: true
+      matrix:
+        php-version: ["7.4", "7.3", "7.2"]
+        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        include:
+          - php-version: "7.4"
+            operating-system: "ubuntu-latest"
+            report-coverage: true
+    name: Test with PHP ${{ matrix.php-version }} on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: ${{ matrix.php-version }}
+          extension-csv: dom, mbstring, fileinfo, json, libxml, openssl, tokenizer, xml, xmlwriter
+      - name: Install Dependencies
+        run: composer install --prefer-dist
+      - name: Copy Env Example
+        run: cp .env.example .env
+      - name: Setup Environment
+        run: |
+          php artisan key:generate
+      - name: Test w/ Reporting
+        if: matrix.report-coverage
+        uses: paambaati/codeclimate-action@v2.3.0
+        env:
+          CC_TEST_REPORTER_ID: 6b359171e9fa8508da88f6d92e43d8f9c739e5ac19cbf420f897331b46dc5d0a
+        with:
+          coverageCommand: php vendor/bin/phpunit --coverage-text --coverage-clover ./clover.xml
+      - name: Test w/o Reporting
+        if: "!matrix.report-coverage"
+        run: php vendor/bin/phpunit

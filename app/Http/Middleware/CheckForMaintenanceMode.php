@@ -4,6 +4,7 @@ namespace Response\API\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode as Middleware;
 
+/** @codeCoverageIgnore */
 class CheckForMaintenanceMode extends Middleware
 {
     /**

@@ -171,7 +171,7 @@ return [
          */
         Response\API\Providers\AppServiceProvider::class,
         Response\API\Providers\AuthServiceProvider::class,
-        // Response\API\Providers\BroadcastServiceProvider::class,
+        Response\API\Providers\BroadcastServiceProvider::class,
         Response\API\Providers\EventServiceProvider::class,
         Response\API\Providers\RouteServiceProvider::class,
 
