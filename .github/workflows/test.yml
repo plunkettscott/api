@@ -20,6 +20,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-version }}
+          extension-csv: dom, mbstring, fileinfo, json, libxml, openssl, tokenizer, xml, xmlwriter
       - name: Install Dependencies
         run: composer install --prefer-dist
       - name: Copy Env Example
